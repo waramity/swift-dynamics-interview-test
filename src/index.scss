@@ -1,13 +1,7 @@
-$font-stack-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-$font-stack-monospace: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+$primary-color: #ffa200; 
+$secondary-color: #6eda78;
 
 body {
   margin: 0;
-  font-family: $font-stack-sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: $font-stack-monospace;
+  background: linear-gradient(to left, $primary-color, $secondary-color);
 }

@@ -1,55 +1,35 @@
 import './App.scss';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { Col, Row } from 'antd';
 import { Counter } from '../Counter/Counter';
+import { Typography } from 'antd';
+
+const { Title } = Typography;
 
 const App: React.FC = () => {
+  const navItems = [
+    { title: 'Test 1', content: 'Layout & Style' },
+    { title: 'Test 2', content: 'Connect API' },
+    { title: 'Test 3', content: 'Form & Table' },
+  ];
 
   return (
     <div className="App">
       <header className="App-header">
+        <Row className="Nav"  justify="center">
+          {navItems.map((item, index) => (
+            <Col
+              xs={{ span: 4}}
+              className="Nav-item"
+              key={index}
+            >
+              <Title level={5} className="title">
+                {item.title}
+              </Title>
+              {item.content}
+            </Col>
+         ))}
+        </Row>
         <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
       </header>
     </div>
   );
