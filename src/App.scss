@@ -1,0 +1,21 @@
+$primary-color: #282c34;
+$accent-color: #61dafb;
+
+.App {
+  text-align: center;
+
+  &-header {
+    background-color: $primary-color;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+
+    &-link {
+      color: $accent-color;
+    }
+  }
+}
