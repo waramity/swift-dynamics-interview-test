@@ -1,9 +1,11 @@
 {
   "navItems": [{
     "title": "Test 1",
-    "description": "Layout & Style"
+    "description": "Layout & Style",
+    "path": "/test-1"
   }, {
     "title": "Test 2",
-    "description": "Form & Table"
+    "description": "Form & Table",
+    "path": "/test-2"
   }]
 }

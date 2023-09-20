@@ -1,6 +1,9 @@
 $primary-color: #ffa200; 
 $secondary-color: #6eda78;
 
+:root {
+}
+
 body {
   margin: 0;
   background: linear-gradient(to left, $primary-color, $secondary-color);

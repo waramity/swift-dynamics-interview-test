@@ -19,8 +19,14 @@ ReactDOM.render(
         path="/"
         element={<App />} 
       />
-            {/* <Route path="/posts/:postId" component={SinglePostPage} />
-             */}
+      <Route
+        path="/test-1"
+        element={<App />} 
+      />
+      <Route
+        path="/test-2"
+        element={<App />} 
+      />
     </Routes>
   </BrowserRouter>,
 
