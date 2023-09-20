@@ -26,6 +26,10 @@ const App: React.FC = () => {
   if (!ready) return "loading translations...";
 
   const navItems: navProps[] = t('navItems', { returnObjects: true });
+  const changeLanguageHandler = (e: any) => {
+    const languageValue = e.target.value
+    i18n.changeLanguage(languageValue);
+  }
 
 
   return (
@@ -36,6 +40,10 @@ const App: React.FC = () => {
       {/* <Trans i18nKey="userMessagesUnread" count={count}>
         You have {{ count }} unread message.
       </Trans> */}
+      <select className="custom-select" style={{width: 200}} onChange={changeLanguageHandler}>
+        <option value="en" >English</option>
+        <option value="th" >Thai</option>
+      </select>
       <header className="App-header">
         <Row className="Nav"  justify="center">
           {navItems.map(({title, description}: navProps) => (
