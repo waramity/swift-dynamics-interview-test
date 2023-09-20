@@ -11,10 +11,38 @@ const initialShapes = [['squre', 'circle', 'oval'] , ['trapezoid', 'rectangle', 
 interface Test1Props {
 }
 
-const Test1: React.FC<Test1Props> = (props) => {
-      const [shapes, setShapes] = useState(initialShapes);
+const buttonFunctions: { [key: string]: () => void } = {
+  Left: () => {
+    console.log('Left button clicked');
+  },
+  Up: () => {
+    console.log('Up button clicked');
+  },
+  Down: () => {
+    console.log('Down button clicked');
+  },
+  Right: () => {
+    console.log('Right button clicked');
+  },
+};
 
-  // Function to shuffle the shapes array randomly
+const Test1: React.FC<Test1Props> = (props) => {
+
+  const [shapes, setShapes] = useState(initialShapes);
+
+  const popShapes = () => {
+    const flattenedShapes = shapes.flat();
+    console.log(flattenedShapes)
+    flattenedShapes.shift();
+    const newShapes = [];
+    while (flattenedShapes.length > 0) {
+      newShapes.push(flattenedShapes.splice(0, initialShapes[0].length));
+    }
+
+    setShapes(newShapes);
+  };
+
+
   const shuffleShapes = () => {
     const flattenedShapes = shapes.flat();
     const shuffledShapes = [...flattenedShapes].sort(() => Math.random() - 0.5);
@@ -39,6 +67,14 @@ const Test1: React.FC<Test1Props> = (props) => {
             className={`Controller-col ${Array.isArray(column) ? 'combined-col' : ''} ${
               Array.isArray(column) ? 'combined-btn' : column.toLowerCase() + '-btn'
             }`}
+            // onClick={buttonFunctions[column]}
+            onClick={() => {
+            if (Array.isArray(column)) {
+              column.forEach((button) => buttonFunctions[button]());
+            } else {
+              buttonFunctions[column]();
+            }
+          }}
           >
             {Array.isArray(column) ? column.join('/') : column}
           </Col>
