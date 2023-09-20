@@ -11,48 +11,49 @@ const initialShapes = [['squre', 'circle', 'oval'] , ['trapezoid', 'rectangle', 
 interface Test1Props {
 }
 
+const moveShapes = (direction: string, shapes: string[][], setShapes: (shapes: string[][]) => void) => {
+  const flattenedShapes = shapes.flat();
+  let removedShape: string;
+
+  switch (direction) {
+    case 'Left':
+      removedShape = flattenedShapes.shift()!;
+      flattenedShapes.push(removedShape);
+      break;
+
+    case 'Up':
+    case 'Down':
+      const newShapes = [shapes[1], shapes[0]];
+      setShapes(newShapes);
+      return;
+
+    case 'Right':
+      removedShape = flattenedShapes.pop()!;
+      flattenedShapes.unshift(removedShape);
+      break;
+
+    default:
+      return;
+  }
+
+  const newShapes = [];
+  while (flattenedShapes.length > 0) {
+    newShapes.push(flattenedShapes.splice(0, shapes[0].length));
+  }
+
+  setShapes(newShapes);
+};
 
 const Test1: React.FC<Test1Props> = (props) => {
 
   const [shapes, setShapes] = useState(initialShapes);
 
   const buttonFunctions: { [key: string]: () => void } = {
-    Left: () => {
-      const flattenedShapes = shapes.flat();
-      const removedShape: string = flattenedShapes.shift()!;
-      flattenedShapes.push(removedShape);
-      const newShapes = [];
-      while (flattenedShapes.length > 0) {
-        newShapes.push(flattenedShapes.splice(0, initialShapes[0].length));
-      }
-  
-      setShapes(newShapes);
-    },
-    Up: () => {
-      console.log('Up button clicked');
-      const newShapes = [shapes[1], shapes[0]];
-      console.log(newShapes)
-      setShapes(newShapes);
-
-    },
-    Down: () => {
-      console.log('Down button clicked');
-      const newShapes = [shapes[1], shapes[0]];
-      console.log(newShapes)
-      setShapes(newShapes);
-    },
-    Right: () => {
-      const flattenedShapes = shapes.flat();
-      const removedShape: string = flattenedShapes.pop()!;
-      flattenedShapes.unshift(removedShape);
-      const newShapes = [];
-      while (flattenedShapes.length > 0) {
-        newShapes.push(flattenedShapes.splice(0, initialShapes[0].length));
-      }
-  
-      setShapes(newShapes);
-    },
-  };
+  Left: () => moveShapes('Left', shapes, setShapes),
+  Up: () => moveShapes('Up', shapes, setShapes),
+  Down: () => moveShapes('Down', shapes, setShapes),
+  Right: () => moveShapes('Right', shapes, setShapes),
+};
 
 
   const shuffleShapes = () => {
