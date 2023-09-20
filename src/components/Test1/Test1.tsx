@@ -1,15 +1,14 @@
 import './Test1.scss';
+import React, { useState, useEffect } from 'react';
+
 import { Col, Row } from 'antd';
 import { Typography } from 'antd';
 
-import React, { useState, useEffect } from 'react';
 
 const { Title } = Typography;
+
 const controller = ['Left', ['Up', 'Down'], 'Right'];
 const initialShapes = [['squre', 'circle', 'oval'] , ['trapezoid', 'rectangle', 'rhombus']];
-
-interface Test1Props {
-}
 
 const moveShapes = (direction: string, shapes: string[][], setShapes: (shapes: string[][]) => void) => {
   const flattenedShapes = shapes.flat();
@@ -44,16 +43,16 @@ const moveShapes = (direction: string, shapes: string[][], setShapes: (shapes: s
   setShapes(newShapes);
 };
 
-const Test1: React.FC<Test1Props> = (props) => {
+const Test1: React.FC = (props) => {
 
   const [shapes, setShapes] = useState(initialShapes);
 
   const buttonFunctions: { [key: string]: () => void } = {
-  Left: () => moveShapes('Left', shapes, setShapes),
-  Up: () => moveShapes('Up', shapes, setShapes),
-  Down: () => moveShapes('Down', shapes, setShapes),
-  Right: () => moveShapes('Right', shapes, setShapes),
-};
+    Left: () => moveShapes('Left', shapes, setShapes),
+    Up: () => moveShapes('Up', shapes, setShapes),
+    Down: () => moveShapes('Down', shapes, setShapes),
+    Right: () => moveShapes('Right', shapes, setShapes),
+  };
 
 
   const shuffleShapes = () => {
@@ -81,14 +80,15 @@ const Test1: React.FC<Test1Props> = (props) => {
               Array.isArray(column) ? 'combined-btn' : column.toLowerCase() + '-btn'
             }`}
             onClick={() => {
-            if (!Array.isArray(column)) {
-              buttonFunctions[column]();
-            }           }}
+                 if (!Array.isArray(column)) {
+                   buttonFunctions[column]();
+                 }          
+            }}
           >
          {Array.isArray(column) ? (
             column.map((button) => (
               <div key={button} onClick={() => {
-               buttonFunctions[button]();
+                buttonFunctions[button]();
               }}> 
                 {button} 
               </div>
