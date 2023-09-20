@@ -4,16 +4,10 @@ import { Counter } from '../Counter/Counter';
 import { Typography } from 'antd';
 
 import '../../i18n/config';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 
 const { Title } = Typography;
-
-
-const navItems = [
-  { title: 'Test 1', content: 'Layout & Style' },
-  { title: 'Test 2', content: 'Form & Table' },
-];
 
 type NavProps = {
   title: string;
@@ -43,12 +37,9 @@ const App: React.FC = () => {
       {/* <p>{t('title', { name: 'John' })}</p>
       <p>{t('description.part1')}</p>
       <p>{t('description.part2')}</p> */}
-      {/* <Trans i18nKey="userMessagesUnread" count={count}>
-        You have {{ count }} unread message.
-      </Trans> */}
       <select className="custom-select" style={{width: 200}} onChange={changeLanguageHandler}>
-        <option value="en" >English</option>
-        <option value="th" >Thai</option>
+        <option value="en">English</option>
+        <option value="th">ไทย</option>
       </select>
       <header className="App-header">
         <Row className="Nav"  justify="center">

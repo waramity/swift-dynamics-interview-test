@@ -14,4 +14,12 @@ i18next.use(initReactI18next).init({
       translationTH,
     },
   },
+  fallbackLng: 'en', // Fallback language
+
+  keySeparator: false,
+  interpolation: {
+    escapeValue: false,
+  },
 });
+
+export default i18next;
