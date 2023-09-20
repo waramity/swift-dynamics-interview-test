@@ -30,12 +30,18 @@ const Test1: React.FC<Test1Props> = (props) => {
     },
     Up: () => {
       console.log('Up button clicked');
+      const newShapes = [shapes[1], shapes[0]];
+      console.log(newShapes)
+      setShapes(newShapes);
+
     },
     Down: () => {
       console.log('Down button clicked');
+      const newShapes = [shapes[1], shapes[0]];
+      console.log(newShapes)
+      setShapes(newShapes);
     },
     Right: () => {
-      console.log('Right button clicked');
       const flattenedShapes = shapes.flat();
       const removedShape: string = flattenedShapes.pop()!;
       flattenedShapes.unshift(removedShape);
@@ -46,18 +52,6 @@ const Test1: React.FC<Test1Props> = (props) => {
   
       setShapes(newShapes);
     },
-  };
-
-  const popShapes = () => {
-    const flattenedShapes = shapes.flat();
-    console.log(flattenedShapes)
-    flattenedShapes.shift();
-    const newShapes = [];
-    while (flattenedShapes.length > 0) {
-      newShapes.push(flattenedShapes.splice(0, initialShapes[0].length));
-    }
-
-    setShapes(newShapes);
   };
 
 
@@ -85,17 +79,23 @@ const Test1: React.FC<Test1Props> = (props) => {
             className={`Controller-col ${Array.isArray(column) ? 'combined-col' : ''} ${
               Array.isArray(column) ? 'combined-btn' : column.toLowerCase() + '-btn'
             }`}
-            // onClick={buttonFunctions[column]}
             onClick={() => {
-            if (Array.isArray(column)) {
-              column.forEach((button) => buttonFunctions[button]());
-            } else {
+            if (!Array.isArray(column)) {
               buttonFunctions[column]();
-            }
-          }}
+            }           }}
           >
-            {Array.isArray(column) ? column.join('/') : column}
-          </Col>
+         {Array.isArray(column) ? (
+            column.map((button) => (
+              <div key={button} onClick={() => {
+               buttonFunctions[button]();
+              }}> 
+                {button} 
+              </div>
+            ))
+          ) : (
+            column
+          )}
+        </Col>
         ))}
         </Row>
 
