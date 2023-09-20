@@ -5,7 +5,7 @@ import { Typography } from 'antd';
 
 import '../../i18n/config';
 import { useTranslation } from 'react-i18next';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const { Title } = Typography;
 
@@ -34,9 +34,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      {/* <p>{t('title', { name: 'John' })}</p>
-      <p>{t('description.part1')}</p>
-      <p>{t('description.part2')}</p> */}
+
       <select className="custom-select" style={{width: 200}} onChange={changeLanguageHandler}>
         <option value="en">English</option>
         <option value="th">ไทย</option>
