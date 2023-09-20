@@ -11,24 +11,42 @@ const initialShapes = [['squre', 'circle', 'oval'] , ['trapezoid', 'rectangle', 
 interface Test1Props {
 }
 
-const buttonFunctions: { [key: string]: () => void } = {
-  Left: () => {
-    console.log('Left button clicked');
-  },
-  Up: () => {
-    console.log('Up button clicked');
-  },
-  Down: () => {
-    console.log('Down button clicked');
-  },
-  Right: () => {
-    console.log('Right button clicked');
-  },
-};
 
 const Test1: React.FC<Test1Props> = (props) => {
 
   const [shapes, setShapes] = useState(initialShapes);
+
+  const buttonFunctions: { [key: string]: () => void } = {
+    Left: () => {
+      const flattenedShapes = shapes.flat();
+      const removedShape: string = flattenedShapes.shift()!;
+      flattenedShapes.push(removedShape);
+      const newShapes = [];
+      while (flattenedShapes.length > 0) {
+        newShapes.push(flattenedShapes.splice(0, initialShapes[0].length));
+      }
+  
+      setShapes(newShapes);
+    },
+    Up: () => {
+      console.log('Up button clicked');
+    },
+    Down: () => {
+      console.log('Down button clicked');
+    },
+    Right: () => {
+      console.log('Right button clicked');
+      const flattenedShapes = shapes.flat();
+      const removedShape: string = flattenedShapes.pop()!;
+      flattenedShapes.unshift(removedShape);
+      const newShapes = [];
+      while (flattenedShapes.length > 0) {
+        newShapes.push(flattenedShapes.splice(0, initialShapes[0].length));
+      }
+  
+      setShapes(newShapes);
+    },
+  };
 
   const popShapes = () => {
     const flattenedShapes = shapes.flat();
