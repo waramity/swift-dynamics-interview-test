@@ -14,29 +14,39 @@ const navItems = [
   { title: 'Test 2', content: 'Form & Table' },
 ];
 
+type navProps = {
+  title: string;
+  description: string;
+};
+
 const App: React.FC = () => {
-const { t } = useTranslation();
-const count = 3;
+  const count = 3;
+  const { t, i18n, ready } = useTranslation();
+
+  if (!ready) return "loading translations...";
+
+  const navItems: navProps[] = t('navItems', { returnObjects: true });
+
+
   return (
     <div className="App">
-           <p>{t('title', { name: 'John' })}</p>
+      {/* <p>{t('title', { name: 'John' })}</p>
       <p>{t('description.part1')}</p>
-      <p>{t('description.part2')}</p>
-      <Trans i18nKey="userMessagesUnread" count={count}>
+      <p>{t('description.part2')}</p> */}
+      {/* <Trans i18nKey="userMessagesUnread" count={count}>
         You have {{ count }} unread message.
-      </Trans>
+      </Trans> */}
       <header className="App-header">
         <Row className="Nav"  justify="center">
-          {navItems.map((item, index) => (
+          {navItems.map(({title, description}: navProps) => (
             <Col
               xs={{ span: 4}}
               className="Nav-item"
-              key={index}
             >
               <Title level={5} className="title">
-                {item.title}
+                {title}
               </Title>
-              {item.content}
+              {description}
             </Col>
          ))}
         </Row>
