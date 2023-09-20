@@ -52,10 +52,11 @@ const App: React.FC = () => {
       </select>
       <header className="App-header">
         <Row className="Nav"  justify="center">
-          {navItems.map(({title, description}: NavProps) => (
+          {navItems.map(({title, description}: NavProps, index: number) => (
             <Col
               xs={{ span: 4}}
               className="Nav-item"
+              key={index}
             >
               <Title level={5} className="title">
                 {title}
@@ -64,14 +65,6 @@ const App: React.FC = () => {
             </Col>
          ))}
         </Row>
-        {t("navItems", { returnObjects: true }).map(
-          ({ title, description }, index: number) => (
-            <li key={index}>
-              <h3>{title}</h3>
-              <p>{description}</p>
-            </li>
-          )
-        )}
         <Counter />
       </header>
       
