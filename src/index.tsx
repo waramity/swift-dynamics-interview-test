@@ -30,7 +30,7 @@ ReactDOM.render(
         element={<Test2 />} 
       />
     </Routes>
-  </BrowserRouter>,
+  </BrowserRouter>
 
   </Provider>,
   document.getElementById('root')
