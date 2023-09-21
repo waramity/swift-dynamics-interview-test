@@ -8,7 +8,7 @@ import { resetForm, FormState } from '../../services/form/formSlice';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveForm } from '../../services/form/formSlice';
-import { setSortedInfo } from '../../services/form/tableSlice';
+import { setSortedInfo, setSelectedData } from '../../services/form/tableSlice';
 
 
 const { Option } = Select;
@@ -62,6 +62,7 @@ const Test2: React.FC = (props) => {
   const rowSelection: TableRowSelection<FormState> = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    dispatch(setSelectedData(selectedRowKeys))
   },
   onSelect: (record, selected, selectedRows) => {
     console.log(record, selected, selectedRows);

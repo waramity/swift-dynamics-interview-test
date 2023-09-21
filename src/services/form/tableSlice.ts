@@ -20,17 +20,15 @@ const tableSlice = createSlice({
       state.sortedInfo = action.payload;
     },
     setSelectedData: (state, action) => {
-      console.log(action.payload)
       state.selectedData = action.payload
-      console.log(state.selectedData)
     },
     clearSelectedData: (state) => {
-      state.selectedData = []
+      state.selectedData = [] 
     },
   },
 
 });
 
-export const { setSortedInfo } = tableSlice.actions;
+export const { setSortedInfo, setSelectedData } = tableSlice.actions;
 
 export default tableSlice.reducer;

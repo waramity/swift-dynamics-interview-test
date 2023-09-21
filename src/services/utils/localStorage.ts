@@ -1,7 +1,7 @@
 import { parse } from "path";
 
 export const saveFormDataToLocalStorage = (formData: any) => {
-  const randomId = Math.floor(Math.random() * 1000); // Adjust the range as needed
+  const randomId = Math.floor(Math.random() * 1000); 
   formData.key = String(randomId);
   const existingData = localStorage.getItem('formData');
   const existingArray = existingData ? JSON.parse(existingData) : [];
