@@ -28,11 +28,9 @@ function slugify(text: string) {
 
 const App: React.FC = () => {
   const count = 3;
-  const { t, i18n, ready } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [navItems, setNavItems] = useState<NavProps[]>([]);
 
-
-  if (!ready) return "loading translations...";
 
   useEffect(() => {
     const items: NavProps[] = t('navItems', { returnObjects: true });
