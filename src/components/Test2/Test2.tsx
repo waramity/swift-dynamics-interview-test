@@ -35,7 +35,6 @@ const Test2: React.FC = (props) => {
     onReset()
   };
 
-
   const handleChange: TableProps<FormState>['onChange'] = (pagination, filters, sorter) => {
     dispatch(setSortedInfo(sorter as SorterResult<FormState>));
   };

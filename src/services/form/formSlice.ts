@@ -25,11 +25,10 @@ const formSlice = createSlice({
   reducers: {
     resetForm: (state) => initialState,
     saveForm: (state: any, action: PayloadAction<FormState>) => {
-      const { birthDate, citizenId, email, name, role, telephone } = action.payload;
       const key = Math.floor(Math.random() * 1000); 
       action.payload.key = String(key);
 
-      saveFormDataToLocalStorage({ key, birthDate, citizenId, email, name, role, telephone });
+      saveFormDataToLocalStorage(action.payload);
       return [action.payload, ...state];
     },
   },
