@@ -59,6 +59,11 @@ const Test2: React.FC<Test2Props> = (props) => {
   const dispatch = useDispatch();
   const formState = useSelector((state: RootState) => state.form);
 
+  localStorage.clear(); // This will clear all data stored in localStorage for the current domain
+  const beforeData = JSON.parse(localStorage.getItem('formData')!);
+  console.log(beforeData)
+
+
 
   const onReset = () => {
     form.resetFields(); 
@@ -71,6 +76,14 @@ const Test2: React.FC<Test2Props> = (props) => {
 
   const onSubmit = (values: any) => {
     console.log('Form values:', values);
+    const existingData = localStorage.getItem('formData');
+    const existingArray = existingData ? JSON.parse(existingData) : [];
+    existingArray.push(values);
+    var updatedData = JSON.stringify(existingArray);
+    localStorage.setItem('formData', updatedData);
+    console.log(localStorage.getItem('formData'))
+
+
   };
 
   const onFinish = () => {
@@ -123,32 +136,10 @@ const Test2: React.FC<Test2Props> = (props) => {
   return (
     <div>
         <Title>Form & Table</Title>
-        {/* <Form
-      name="myForm"
-      onFinish={onFinish}
-      labelCol={{ span: 4 }}
-      wrapperCol={{ span: 14 }}
-    >
-        <Form.Item
-          name="name"
-          label="Name"
-          rules={[
-            {
-              required: true,
-              message: 'Please enter your name',
-            },
-          ]}
-        >
-          <Input placeholder="Enter your name" 
-
-          />
-        </Form.Item>
-    </Form> */}
         <Form
-            form={form} 
+          form={form} 
           onFinish={onFinish}
-            name="simpleForm"
-            initialValues={{ name: '', email: '' }}
+          name="simpleForm"
          >
         <Form.Item
           name="name"
@@ -179,7 +170,9 @@ const Test2: React.FC<Test2Props> = (props) => {
             },
           ]}
         >
-          <Input placeholder="Enter your email" />
+          <Input placeholder="Enter your email"
+           onChange={(e) => handleFieldChange("email", e.target.value)}
+          />
         </Form.Item>
         <Form.Item
            name="role"
