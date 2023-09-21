@@ -59,12 +59,6 @@ const Test2: React.FC<Test2Props> = (props) => {
   const dispatch = useDispatch();
   const formState = useSelector((state: RootState) => state.form);
 
-  localStorage.clear(); // This will clear all data stored in localStorage for the current domain
-  const beforeData = JSON.parse(localStorage.getItem('formData')!);
-  console.log(beforeData)
-
-
-
   const onReset = () => {
     form.resetFields(); 
   };
