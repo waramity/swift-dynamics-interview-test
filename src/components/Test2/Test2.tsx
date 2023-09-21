@@ -19,7 +19,8 @@ const Test2: React.FC = (props) => {
   const [form] = Form.useForm(); 
   const dispatch = useDispatch();
   const formState = useSelector((state: RootState) => state.form);
-  const sortedInfo = useSelector((state: RootState) => state.table.sortedInfo);
+  const sortedState = useSelector((state: RootState) => state.table.sortedInfo);
+  const selectedState = useSelector((state: RootState) => state.table.selectedData);
 
   const onReset = () => {
     form.resetFields(); 
@@ -31,15 +32,12 @@ const Test2: React.FC = (props) => {
 
   const onFinish = (values: any) => {
     dispatch(saveForm(values));
-    form.resetFields(); 
-    console.log(formState)
+    onReset()
   };
 
 
   const handleChange: TableProps<FormState>['onChange'] = (pagination, filters, sorter) => {
-    console.log('Various parameters', pagination, filters, sorter);
     dispatch(setSortedInfo(sorter as SorterResult<FormState>));
-
   };
 
   const columns: ColumnsType<FormState> = [
@@ -48,7 +46,7 @@ const Test2: React.FC = (props) => {
       dataIndex: 'name',
       key: 'name',
       sorter: (a, b) => (a.name as string).localeCompare(b.name as string),
-      sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
+      sortOrder: sortedState.columnKey === 'name' ? sortedState.order : null,
       ellipsis: true,
     },
     {
@@ -56,7 +54,7 @@ const Test2: React.FC = (props) => {
       dataIndex: 'email',
       key: 'email',
       sorter: (a, b) => (a.email as string).localeCompare(b.email as string),
-      sortOrder: sortedInfo.columnKey === 'email' ? sortedInfo.order : null,
+      sortOrder: sortedState.columnKey === 'email' ? sortedState.order : null,
       ellipsis: true,
     },
   ];
@@ -69,7 +67,12 @@ const Test2: React.FC = (props) => {
     console.log(record, selected, selectedRows);
   },
   onSelectAll: (selected, selectedRows, changeRows) => {
-    console.log(selected, selectedRows, changeRows);
+    if (selected) {
+      console.log(selectedRows);
+      console.log(changeRows);
+    } else {
+      console.log(selected);
+    }
   },
 };
 
