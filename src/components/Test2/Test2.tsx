@@ -7,17 +7,19 @@ import type { TableRowSelection } from 'antd/es/table/interface';
 import { resetForm, FormState } from '../../services/form/formSlice';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
+import { saveForm } from '../../services/form/formSlice';
+
 
 const { Option } = Select;
 const { Title } = Typography;
 
 const Test2: React.FC = (props) => {
+
   const [form] = Form.useForm(); 
   const [sortedInfo, setSortedInfo] = useState<SorterResult<FormState>>({});
   const dispatch = useDispatch();
   const formState = useSelector((state: RootState) => state.form);
 
-  // localStorage.clear();
 
   const onReset = () => {
     form.resetFields(); 
@@ -28,19 +30,8 @@ const Test2: React.FC = (props) => {
     setSortedInfo(sorter as SorterResult<FormState>);
   };
 
-  const onSubmit = (values: any) => {
-    console.log('Form values:', values);
-    const existingData = localStorage.getItem('formData');
-    const existingArray = existingData ? JSON.parse(existingData) : [];
-    existingArray.push(values);
-    var updatedData = JSON.stringify(existingArray);
-    localStorage.setItem('formData', updatedData);
-  };
-
   const onFinish = (values: any) => {
-    console.log(values)
-    // onSubmit(formState);
-    onSubmit(values);
+    dispatch(saveForm(values));
     form.resetFields(); 
   };
 

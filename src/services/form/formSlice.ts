@@ -25,7 +25,11 @@ const formSlice = createSlice({
     resetForm: (state) => initialState,
     saveForm: (state: any, action: PayloadAction<FormState>) => {
       console.log("payload: " + action.payload)
-      saveFormDataToLocalStorage(action.payload);
+      console.log("payload: " + typeof action.payload)
+
+      const { birthDate, citizenId, email, name, role, telephone } = action.payload;
+
+      saveFormDataToLocalStorage({ birthDate, citizenId, email, name, role, telephone });
     },
   },
 });
