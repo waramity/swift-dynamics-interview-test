@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Typography } from 'antd';
-import { Form, Input, Button, Select, DatePicker, Radio, Table, Space } from 'antd';
+import { Form, Input, Button, Select, DatePicker, Radio, Table, Space, Switch } from 'antd';
 import type { TableProps } from 'antd';
 import type { ColumnsType, FilterValue, SorterResult } from 'antd/es/table/interface';
+import type { TableRowSelection } from 'antd/es/table/interface';
+
 
 
 const { Option } = Select;
@@ -19,7 +21,7 @@ interface DataType {
 }
 
 const data: DataType[] = [
-  {
+    {
     key: '1',
     name: 'John Brown',
     age: 32,
@@ -48,8 +50,8 @@ const data: DataType[] = [
 const Test2: React.FC<Test2Props> = (props) => {
 
   const [form] = Form.useForm(); 
-  const [filteredInfo, setFilteredInfo] = useState<Record<string, FilterValue | null>>({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
+
 
   const onReset = () => {
     form.resetFields(); 
@@ -57,24 +59,7 @@ const Test2: React.FC<Test2Props> = (props) => {
 
   const handleChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter);
-    setFilteredInfo(filters);
     setSortedInfo(sorter as SorterResult<DataType>);
-  };
-
-  const clearFilters = () => {
-    setFilteredInfo({});
-  };
-
-  const clearAll = () => {
-    setFilteredInfo({});
-    setSortedInfo({});
-  };
-
-  const setAgeSort = () => {
-    setSortedInfo({
-      order: 'descend',
-      columnKey: 'age',
-    });
   };
 
   const columns: ColumnsType<DataType> = [
@@ -82,12 +67,7 @@ const Test2: React.FC<Test2Props> = (props) => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      filters: [
-        { text: 'Joe', value: 'Joe' },
-        { text: 'Jim', value: 'Jim' },
-      ],
-      filteredValue: filteredInfo.name || null,
-      sorter: (a, b) => (a.name as string).localeCompare(b.name as string), // Type assertion for a.name and b.name
+      sorter: (a, b) => (a.name as string).localeCompare(b.name as string),
       sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
       ellipsis: true,
     },
@@ -103,16 +83,23 @@ const Test2: React.FC<Test2Props> = (props) => {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
-      filters: [
-        { text: 'London', value: 'London' },
-        { text: 'New York', value: 'New York' },
-      ],
-      filteredValue: filteredInfo.address || null,
       sorter: (a, b) => a.address.length - b.address.length,
       sortOrder: sortedInfo.columnKey === 'address' ? sortedInfo.order : null,
       ellipsis: true,
     },
   ];
+
+  const rowSelection: TableRowSelection<DataType> = {
+  onChange: (selectedRowKeys, selectedRows) => {
+    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+  },
+  onSelect: (record, selected, selectedRows) => {
+    console.log(record, selected, selectedRows);
+  },
+  onSelectAll: (selected, selectedRows, changeRows) => {
+    console.log(selected, selectedRows, changeRows);
+  },
+};
 
   return (
     <div>
@@ -231,11 +218,8 @@ const Test2: React.FC<Test2Props> = (props) => {
            </Form.Item>
     </Form>
     <Space style={{ marginBottom: 16 }}>
-        <Button onClick={setAgeSort}>Sort age</Button>
-        <Button onClick={clearFilters}>Clear filters</Button>
-        <Button onClick={clearAll}>Clear filters and sorters</Button>
+      <Table columns={columns} dataSource={data} onChange={handleChange} rowSelection={{ ...rowSelection }}/>
     </Space>
-    <Table columns={columns} dataSource={data} onChange={handleChange} />
     </div>
   );
 };
