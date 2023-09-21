@@ -4,6 +4,11 @@ import { Form, Input, Button, Select, DatePicker, Radio, Table, Space, Switch } 
 import type { TableProps } from 'antd';
 import type { ColumnsType, FilterValue, SorterResult } from 'antd/es/table/interface';
 import type { TableRowSelection } from 'antd/es/table/interface';
+import { updateField, resetForm } from '../../services/form/formSlice';
+import { RootState } from '../../store';
+import { useDispatch, useSelector } from 'react-redux';
+
+
 
 
 
@@ -51,6 +56,8 @@ const Test2: React.FC<Test2Props> = (props) => {
 
   const [form] = Form.useForm(); 
   const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
+  const dispatch = useDispatch();
+  const formState = useSelector((state: RootState) => state.form);
 
 
   const onReset = () => {
@@ -60,6 +67,18 @@ const Test2: React.FC<Test2Props> = (props) => {
   const handleChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter);
     setSortedInfo(sorter as SorterResult<DataType>);
+  };
+
+  const onSubmit = (values: any) => {
+    console.log('Form values:', values);
+  };
+
+  const onFinish = () => {
+    onSubmit(formState);
+  };
+
+  const handleFieldChange = (field: string, value: string) => {
+    dispatch(updateField({ field, value }));
   };
 
   const columns: ColumnsType<DataType> = [
@@ -104,118 +123,138 @@ const Test2: React.FC<Test2Props> = (props) => {
   return (
     <div>
         <Title>Form & Table</Title>
+        {/* <Form
+      name="myForm"
+      onFinish={onFinish}
+      labelCol={{ span: 4 }}
+      wrapperCol={{ span: 14 }}
+    >
+        <Form.Item
+          name="name"
+          label="Name"
+          rules={[
+            {
+              required: true,
+              message: 'Please enter your name',
+            },
+          ]}
+        >
+          <Input placeholder="Enter your name" 
+
+          />
+        </Form.Item>
+    </Form> */}
         <Form
             form={form} 
+          onFinish={onFinish}
             name="simpleForm"
             initialValues={{ name: '', email: '' }}
          >
-           <Form.Item
-             name="name"
-             label="Name"
-             rules={[
-               {
-                 required: true,
-                 message: 'Please enter your name',
-               },
-             ]}
-           >
-             <Input placeholder="Enter your name" />
-           </Form.Item>
+        <Form.Item
+          name="name"
+          label="Name"
+          rules={[
+            {
+              required: true,
+              message: 'Please enter your name',
+            },
+          ]}
+        >
+          <Input placeholder="Enter your name" 
+          onChange={(e) => handleFieldChange("name", e.target.value)}
+          />
+        </Form.Item>
 
-           <Form.Item
-             name="email"
-             label="Email"
-             rules={[
-               {
-                 required: true,
-                 message: 'Please enter your email',
-               },
-               {
-                 type: 'email',
-                 message: 'Invalid email format',
-               },
-             ]}
-           >
-             <Input placeholder="Enter your email" />
-           </Form.Item>
-           <Form.Item
-              name="role"
-              label="Role"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please select your role',
-                },
-              ]}
-            >
-              <Select placeholder="Select your role">
-                <Option value="developer">Developer</Option>
-                <Option value="designer">Designer</Option>
-                <Option value="manager">Manager</Option>
-              </Select>
-            </Form.Item>
+        <Form.Item
+          name="email"
+          label="Email"
+          rules={[
+            {
+              required: true,
+              message: 'Please enter your email',
+            },
+            {
+              type: 'email',
+              message: 'Invalid email format',
+            },
+          ]}
+        >
+          <Input placeholder="Enter your email" />
+        </Form.Item>
+        <Form.Item
+           name="role"
+           label="Role"
+           rules={[
+             {
+               required: true,
+               message: 'Please select your role',
+             },
+           ]}
+         >
+           <Select placeholder="Select your role">
+             <Option value="developer">Developer</Option>
+             <Option value="designer">Designer</Option>
+             <Option value="manager">Manager</Option>
+           </Select>
+         </Form.Item>
 
-            <Form.Item
-              name="birthDate"
-              label="Birth Date"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please select your birth date',
-                },
-              ]}
-            >
-              <DatePicker placeholder="Select your birth date" />
-            </Form.Item>
-            <Form.Item
-              name="citizenId"
-              label="Citizen ID"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please enter the citizen ID',
-                },
-                {
-                  pattern: /^\d{1,10}-\d{1,2}-\d{1,5}$/, // Adjust the pattern as needed
-                  message: 'Invalid citizen ID format',
-                },
-              ]}
-            >
-              <Input placeholder="Enter citizen ID in format: 1234567890-12-12345" />
-            </Form.Item>
-            <Radio.Group>
-             <Radio value="male">Male</Radio>
-             <Radio value="female">Female</Radio>
-             <Radio value="other">Other</Radio>
-           </Radio.Group>
-           <Form.Item label="Tel">
-           <Form.Item
-             name={['telephone', 'national']}
-             noStyle
-             rules={[{ required: true, message: 'National ID is required' }]}
-           >
-             <Select placeholder="Select national ID">
-               <Option value="TH">TH (+66)</Option>
-               <Option value="NN">NN (+00)</Option>
-             </Select>
-           </Form.Item>
-           <Form.Item
-             name={['telephone', 'no']}
-             noStyle
-             rules={[{ required: true, message: 'Tel. phone is required' }]}
-           >
-             <Input style={{ width: '50%' }} placeholder="Input street" />
-           </Form.Item>
-           </Form.Item>
+         <Form.Item
+           name="birthDate"
+           label="Birth Date"
+           rules={[
+             {
+               required: true,
+               message: 'Please select your birth date',
+             },
+           ]}
+         >
+           <DatePicker placeholder="Select your birth date" />
+         </Form.Item>
+         <Form.Item
+           name="citizenId"
+           label="Citizen ID"
+           rules={[
+             {
+               required: true,
+               message: 'Please enter the citizen ID',
+             },
+           ]}
+         >
+           <Input placeholder="Enter citizen ID in format: 1234567890-12-12345" />
+         </Form.Item>
+         <Radio.Group>
+          <Radio value="male">Male</Radio>
+          <Radio value="female">Female</Radio>
+          <Radio value="other">Other</Radio>
+        </Radio.Group>
+        <Form.Item label="Tel">
+        <Form.Item
+          name={['telephone', 'national']}
+          noStyle
+          rules={[{ required: true, message: 'National ID is required' }]}
+        >
+          <Select placeholder="Select national ID">
+            <Option value="TH">TH (+66)</Option>
+            <Option value="NN">NN (+00)</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          name={['telephone', 'no']}
+          noStyle
+          rules={[{ required: true, message: 'Tel. phone is required' }]}
+        >
+          <Input style={{ width: '50%' }} placeholder="Input street" />
+        </Form.Item>
+        </Form.Item>
 
-           <Form.Item>
-             <Button type="primary" htmlType="submit">
-               Submit
-             </Button>
-             <Button htmlType="button" onClick={onReset}>
-               Reset
-             </Button>
-           </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+          <Button htmlType="button" onClick={onReset}>
+            Reset
+          </Button>
+        </Form.Item>
     </Form>
     <Space style={{ marginBottom: 16 }}>
       <Table columns={columns} dataSource={data} onChange={handleChange} rowSelection={{ ...rowSelection }}/>
