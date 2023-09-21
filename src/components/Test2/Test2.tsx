@@ -8,6 +8,7 @@ import { resetForm, FormState } from '../../services/form/formSlice';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveForm } from '../../services/form/formSlice';
+import { setSortedInfo } from '../../services/form/tableSlice';
 
 
 const { Option } = Select;
@@ -16,9 +17,10 @@ const { Title } = Typography;
 const Test2: React.FC = (props) => {
 
   const [form] = Form.useForm(); 
-  const [sortedInfo, setSortedInfo] = useState<SorterResult<FormState>>({});
+  // const [sortedInfo, setSortedInfo] = useState<SorterResult<FormState>>({});
   const dispatch = useDispatch();
   const formState = useSelector((state: RootState) => state.form);
+  const sortedInfo = useSelector((state: RootState) => state.table.sortedInfo);
 
 
   const onReset = () => {
@@ -34,7 +36,9 @@ const Test2: React.FC = (props) => {
 
   const handleChange: TableProps<FormState>['onChange'] = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter);
-    setSortedInfo(sorter as SorterResult<FormState>);
+    // setSortedInfo(sorter as SorterResult<FormState>);
+    dispatch(setSortedInfo(sorter as SorterResult<FormState>));
+
   };
 
   const columns: ColumnsType<FormState> = [
