@@ -4,27 +4,24 @@ import {
   loadFormDataFromLocalStorage,
 } from '../utils/localStorage';
 
-interface FormState {
+export interface FormState {
   name: string;
   email: string;
 }
 
-const initialState: FormState = {
-  ...loadFormDataFromLocalStorage()
-};
+const initialState: FormState[] = loadFormDataFromLocalStorage();
 
 const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
-    updateField: (state: any, action: PayloadAction<{ field: string; value: string }>) => {
-      const { field, value } = action.payload;
-      state[field] = value;
-    },
     resetForm: (state) => initialState,
+    saveForm: (state: any, action: PayloadAction<FormState>) => {
+      saveFormDataToLocalStorage(action.payload);
+    },
   },
 });
 
-export const { updateField, resetForm } = formSlice.actions;
+export const { saveForm, resetForm } = formSlice.actions;
 
 export default formSlice.reducer;

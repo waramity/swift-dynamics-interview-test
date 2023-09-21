@@ -4,72 +4,29 @@ import { Form, Input, Button, Select, DatePicker, Radio, Table, Space, Switch } 
 import type { TableProps } from 'antd';
 import type { ColumnsType, FilterValue, SorterResult } from 'antd/es/table/interface';
 import type { TableRowSelection } from 'antd/es/table/interface';
-import { updateField, resetForm } from '../../services/form/formSlice';
+import { resetForm, FormState } from '../../services/form/formSlice';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
-
-
-
-
 
 const { Option } = Select;
 const { Title } = Typography;
 
-interface Test2Props {
-}
-
-interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-}
-
-const data: DataType[] = [
-    {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Jim Red',
-    age: 32,
-    address: 'London No. 2 Lake Park',
-  },
-]
-
-const Test2: React.FC<Test2Props> = (props) => {
-
+const Test2: React.FC = (props) => {
   const [form] = Form.useForm(); 
-  const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
+  const [sortedInfo, setSortedInfo] = useState<SorterResult<FormState>>({});
   const dispatch = useDispatch();
   const formState = useSelector((state: RootState) => state.form);
 
-  useEffect(() => {
-    console.log(formState)
-  });
+  localStorage.clear();
+
 
   const onReset = () => {
     form.resetFields(); 
   };
 
-  const handleChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter) => {
+  const handleChange: TableProps<FormState>['onChange'] = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter);
-    setSortedInfo(sorter as SorterResult<DataType>);
+    setSortedInfo(sorter as SorterResult<FormState>);
   };
 
   const onSubmit = (values: any) => {
@@ -79,20 +36,14 @@ const Test2: React.FC<Test2Props> = (props) => {
     existingArray.push(values);
     var updatedData = JSON.stringify(existingArray);
     localStorage.setItem('formData', updatedData);
-    console.log(localStorage.getItem('formData'))
-
-
   };
 
   const onFinish = () => {
+    console.log(formState)
     onSubmit(formState);
   };
 
-  const handleFieldChange = (field: string, value: string) => {
-    dispatch(updateField({ field, value }));
-  };
-
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<FormState> = [
     {
       title: 'Name',
       dataIndex: 'name',
@@ -102,24 +53,16 @@ const Test2: React.FC<Test2Props> = (props) => {
       ellipsis: true,
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-      sorter: (a, b) => a.age - b.age,
-      sortOrder: sortedInfo.columnKey === 'age' ? sortedInfo.order : null,
-      ellipsis: true,
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-      sorter: (a, b) => a.address.length - b.address.length,
-      sortOrder: sortedInfo.columnKey === 'address' ? sortedInfo.order : null,
+      title: 'email',
+      dataIndex: 'email',
+      key: 'email',
+      sorter: (a, b) => (a.email as string).localeCompare(b.email as string),
+      sortOrder: sortedInfo.columnKey === 'email' ? sortedInfo.order : null,
       ellipsis: true,
     },
   ];
 
-  const rowSelection: TableRowSelection<DataType> = {
+  const rowSelection: TableRowSelection<FormState> = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
   },
@@ -149,9 +92,7 @@ const Test2: React.FC<Test2Props> = (props) => {
             },
           ]}
         >
-          <Input placeholder="Enter your name" 
-          onChange={(e) => handleFieldChange("name", e.target.value)}
-          />
+          <Input placeholder="Enter your name" />
         </Form.Item>
 
         <Form.Item
@@ -168,9 +109,7 @@ const Test2: React.FC<Test2Props> = (props) => {
             },
           ]}
         >
-          <Input placeholder="Enter your email"
-           onChange={(e) => handleFieldChange("email", e.target.value)}
-          />
+          <Input placeholder="Enter your email"/>
         </Form.Item>
         <Form.Item
            name="role"
@@ -248,7 +187,7 @@ const Test2: React.FC<Test2Props> = (props) => {
         </Form.Item>
     </Form>
     <Space style={{ marginBottom: 16 }}>
-      <Table columns={columns} dataSource={data} onChange={handleChange} rowSelection={{ ...rowSelection }}/>
+      <Table columns={columns} dataSource={formState} onChange={handleChange} rowSelection={{ ...rowSelection }}/>
     </Space>
     </div>
   );

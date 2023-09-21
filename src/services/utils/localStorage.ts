@@ -1,5 +1,10 @@
 export const saveFormDataToLocalStorage = (formData: any) => {
-  localStorage.setItem('formData', JSON.stringify(formData));
+  const existingData = localStorage.getItem('formData');
+  const existingArray = existingData ? JSON.parse(existingData) : [];
+  existingArray.push(formData);
+  const updatedData = JSON.stringify(existingArray);
+  console.log(updatedData)
+  localStorage.setItem('formData', existingArray);
 };
 
 export const loadFormDataFromLocalStorage = () => {
