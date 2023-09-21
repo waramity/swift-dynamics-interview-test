@@ -17,14 +17,16 @@ const { Title } = Typography;
 const Test2: React.FC = (props) => {
 
   const [form] = Form.useForm(); 
-  // const [sortedInfo, setSortedInfo] = useState<SorterResult<FormState>>({});
   const dispatch = useDispatch();
   const formState = useSelector((state: RootState) => state.form);
   const sortedInfo = useSelector((state: RootState) => state.table.sortedInfo);
 
-
   const onReset = () => {
     form.resetFields(); 
+  };
+
+  const onDelete = () => {
+    console.log('hi')
   };
 
   const onFinish = (values: any) => {
@@ -36,7 +38,6 @@ const Test2: React.FC = (props) => {
 
   const handleChange: TableProps<FormState>['onChange'] = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter);
-    // setSortedInfo(sorter as SorterResult<FormState>);
     dispatch(setSortedInfo(sorter as SorterResult<FormState>));
 
   };
@@ -185,6 +186,9 @@ const Test2: React.FC = (props) => {
         </Form.Item>
     </Form>
     <Space style={{ marginBottom: 16 }}>
+       <Button htmlType="button" onClick={onDelete}>
+           Remove
+       </Button>
       <Table columns={columns} dataSource={formState} onChange={handleChange} rowSelection={{ ...rowSelection }}/>
     </Space>
     </div>
