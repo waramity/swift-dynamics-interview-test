@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography } from 'antd';
 import { Form, Input, Button, Select, DatePicker, Radio, Table, Space, Switch } from 'antd';
 import type { TableProps } from 'antd';
@@ -58,6 +58,10 @@ const Test2: React.FC<Test2Props> = (props) => {
   const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
   const dispatch = useDispatch();
   const formState = useSelector((state: RootState) => state.form);
+
+  useEffect(() => {
+    console.log(formState)
+  });
 
   const onReset = () => {
     form.resetFields(); 

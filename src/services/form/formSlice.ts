@@ -1,4 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  saveFormDataToLocalStorage,
+  loadFormDataFromLocalStorage,
+} from '../utils/localStorage';
 
 interface FormState {
   name: string;
@@ -6,8 +10,7 @@ interface FormState {
 }
 
 const initialState: FormState = {
-  name: '',
-  email: '',
+  ...loadFormDataFromLocalStorage()
 };
 
 const formSlice = createSlice({
