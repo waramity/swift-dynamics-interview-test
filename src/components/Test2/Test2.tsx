@@ -28,6 +28,7 @@ const Test2: React.FC = (props) => {
   const onFinish = (values: any) => {
     dispatch(saveForm(values));
     form.resetFields(); 
+    console.log(formState)
   };
 
 
