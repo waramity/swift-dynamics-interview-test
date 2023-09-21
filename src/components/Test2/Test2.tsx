@@ -8,7 +8,7 @@ import { resetForm, FormState } from '../../services/form/formSlice';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveForm } from '../../services/form/formSlice';
-import { setSortedInfo, setSelectedData } from '../../services/form/tableSlice';
+import { setSortedInfo, setSelectedData, deleteSelectedData } from '../../services/form/tableSlice';
 
 
 const { Option } = Select;
@@ -27,7 +27,7 @@ const Test2: React.FC = (props) => {
   };
 
   const onDelete = () => {
-    console.log('hi')
+    dispatch(deleteSelectedData())
   };
 
   const onFinish = (values: any) => {
@@ -69,10 +69,9 @@ const Test2: React.FC = (props) => {
   },
   onSelectAll: (selected, selectedRows, changeRows) => {
     if (selected) {
-      console.log(selectedRows);
-      console.log(changeRows);
+      console.log(selectedState)
     } else {
-      console.log(selected);
+      console.log(selectedState)
     }
   },
 };
