@@ -25,14 +25,15 @@ const Test2: React.FC = (props) => {
     form.resetFields(); 
   };
 
-  const handleChange: TableProps<FormState>['onChange'] = (pagination, filters, sorter) => {
-    console.log('Various parameters', pagination, filters, sorter);
-    setSortedInfo(sorter as SorterResult<FormState>);
-  };
-
   const onFinish = (values: any) => {
     dispatch(saveForm(values));
     form.resetFields(); 
+  };
+
+
+  const handleChange: TableProps<FormState>['onChange'] = (pagination, filters, sorter) => {
+    console.log('Various parameters', pagination, filters, sorter);
+    setSortedInfo(sorter as SorterResult<FormState>);
   };
 
   const columns: ColumnsType<FormState> = [
