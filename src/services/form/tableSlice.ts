@@ -28,16 +28,18 @@ const tableSlice = createSlice({
       state.selectedData = [] 
     },
     deleteSelectedData: (state) => {
-      const localStorageData = loadFormDataFromLocalStorage()
+      const localStorageData: FormState[] = loadFormDataFromLocalStorage()
 
-      for (let i = 0; i < state.selectedData.length; i++) {
-        console.log(state.selectedData[i]);
+      for (var i = localStorageData.length - 1; i >= 0; i--) {
+        for (var j = 0; j < state.selectedData.length; j++) {
+          if (localStorageData[i].key == state.selectedData[j]) {
+            localStorageData.splice(i, 1);
+            state.selectedData.splice(j, 1);
+            break; 
+          }
+        }
       }
-
-      console.log(localStorageData)
-      const updatedSelectedData = localStorageData.filter((item: FormState, index: number)=> { return item.key != state.selectedData[index]});
-      console.log(updatedSelectedData)
-      localStorage.setItem('formData', JSON.stringify(updatedSelectedData));
+      localStorage.setItem('formData', JSON.stringify(localStorageData));
 
     }
   },
