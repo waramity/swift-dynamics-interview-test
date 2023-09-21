@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { SorterResult } from 'antd/es/table/interface';
 import { FormState } from './formSlice';
-import { loadFormDataFromLocalStorage, saveFormDataToLocalStorage } from '../utils/localStorage';
+import { loadFormDataFromLocalStorage, saveFormDataToLocalStorage, deleteDataFromLocalStorage } from '../utils/localStorage';
 
 interface TableState {
   sortedInfo: SorterResult<FormState>;
@@ -28,19 +28,7 @@ const tableSlice = createSlice({
       state.selectedData = [] 
     },
     deleteSelectedData: (state) => {
-      const localStorageData: FormState[] = loadFormDataFromLocalStorage()
-
-      for (var i = localStorageData.length - 1; i >= 0; i--) {
-        for (var j = 0; j < state.selectedData.length; j++) {
-          if (localStorageData[i].key == state.selectedData[j]) {
-            localStorageData.splice(i, 1);
-            state.selectedData.splice(j, 1);
-            break; 
-          }
-        }
-      }
-      localStorage.setItem('formData', JSON.stringify(localStorageData));
-
+      deleteDataFromLocalStorage(state.selectedData)
     }
   },
 
