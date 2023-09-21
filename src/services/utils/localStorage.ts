@@ -9,5 +9,5 @@ export const saveFormDataToLocalStorage = (formData: any) => {
 
 export const loadFormDataFromLocalStorage = () => {
   const formData = localStorage.getItem('formData');
-  return formData ? JSON.parse(formData) : {};
+  return formData ? JSON.parse(formData) : [];
 };
