@@ -17,8 +17,7 @@ const Test2: React.FC = (props) => {
   const dispatch = useDispatch();
   const formState = useSelector((state: RootState) => state.form);
 
-  localStorage.clear();
-
+  // localStorage.clear();
 
   const onReset = () => {
     form.resetFields(); 
@@ -38,9 +37,11 @@ const Test2: React.FC = (props) => {
     localStorage.setItem('formData', updatedData);
   };
 
-  const onFinish = () => {
-    console.log(formState)
-    onSubmit(formState);
+  const onFinish = (values: any) => {
+    console.log(values)
+    // onSubmit(formState);
+    onSubmit(values);
+    form.resetFields(); 
   };
 
   const columns: ColumnsType<FormState> = [

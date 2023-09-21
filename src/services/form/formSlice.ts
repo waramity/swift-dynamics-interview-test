@@ -5,8 +5,15 @@ import {
 } from '../utils/localStorage';
 
 export interface FormState {
-  name: string;
+  birthDate: Date;
+  citizenId: string;
   email: string;
+  name: string;
+  role: string;
+  telephone: {
+    national: string;
+    no: string;
+  };
 }
 
 const initialState: FormState[] = loadFormDataFromLocalStorage();
@@ -17,6 +24,7 @@ const formSlice = createSlice({
   reducers: {
     resetForm: (state) => initialState,
     saveForm: (state: any, action: PayloadAction<FormState>) => {
+      console.log("payload: " + action.payload)
       saveFormDataToLocalStorage(action.payload);
     },
   },
