@@ -192,6 +192,7 @@ const Test2: React.FC = (props) => {
        <Button htmlType="button" onClick={onDelete}>
            Remove
        </Button>
+      {/* <Table columns={columns} dataSource={formState} onChange={handleChange} rowSelection={{ ...rowSelection }}/> */}
       <Table columns={columns} dataSource={formState} onChange={handleChange} rowSelection={{ ...rowSelection }}/>
     </Space>
     </div>

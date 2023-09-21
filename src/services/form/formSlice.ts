@@ -5,6 +5,7 @@ import {
 } from '../utils/localStorage';
 
 export interface FormState {
+  key: string;
   birthDate: Date;
   citizenId: string;
   email: string;
