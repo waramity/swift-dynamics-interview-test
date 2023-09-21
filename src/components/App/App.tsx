@@ -1,6 +1,5 @@
 import './App.scss';
 import { Col, Row } from 'antd';
-import { Counter } from '../Counter/Counter';
 import { Typography } from 'antd';
 
 import '../../i18n/config';
@@ -72,7 +71,6 @@ const App: React.FC = () => {
             </Link>
          ))}
         </Row>
-        <Counter />
       </header>
       
     </div>
