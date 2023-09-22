@@ -9,6 +9,8 @@ import { Provider } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'; 
 import { useTranslation } from 'react-i18next';
 
+import './locales/config';
+
 import {
   BrowserRouter,
   Routes,
@@ -22,12 +24,7 @@ const LanguageSelector: React.FC = () => {
 
   const changeLanguageHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedLanguage = event.target.value;
-    if (selectedLanguage === 'en') {
-      navigate('/en'); 
-    } else if (selectedLanguage === 'th') {
-      navigate('/th'); 
-    }
-    i18n.changeLanguage('th');
+    i18n.changeLanguage(selectedLanguage);
   };
 
   return (
@@ -45,11 +42,7 @@ ReactDOM.render(
     <LanguageSelector />
     <Routes>
       <Route
-        path="/en"
-        element={<App />} 
-      />
-      <Route
-        path="/th"
+        path="/"
         element={<App />} 
       />
       <Route

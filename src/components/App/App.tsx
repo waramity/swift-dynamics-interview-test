@@ -2,10 +2,10 @@ import './App.scss';
 import { Col, Row } from 'antd';
 import { Typography } from 'antd';
 
-import '../../i18n/config';
 import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
+import { namespaces } from "../../locales/config.constants";
 
 
 
