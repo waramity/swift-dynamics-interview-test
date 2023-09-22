@@ -7,7 +7,7 @@ import type { TableRowSelection } from 'antd/es/table/interface';
 import { resetForm, FormState } from '../../services/form/formSlice';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveForm } from '../../services/form/formSlice';
+import { saveForm, loadForm } from '../../services/form/formSlice';
 import { setSortedInfo, setSelectedData, deleteSelectedData } from '../../services/form/tableSlice';
 
 
@@ -28,6 +28,7 @@ const Test2: React.FC = (props) => {
 
   const onDelete = () => {
     dispatch(deleteSelectedData())
+    dispatch(loadForm())
   };
 
   const onFinish = (values: any) => {

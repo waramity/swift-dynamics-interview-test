@@ -31,9 +31,12 @@ const formSlice = createSlice({
       saveFormDataToLocalStorage(action.payload);
       return [action.payload, ...state];
     },
+    loadForm: (state) => {
+      return loadFormDataFromLocalStorage()
+    }
   },
 });
 
-export const { saveForm, resetForm } = formSlice.actions;
+export const { saveForm, resetForm, loadForm } = formSlice.actions;
 
 export default formSlice.reducer;
