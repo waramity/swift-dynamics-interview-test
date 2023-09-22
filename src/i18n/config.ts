@@ -7,10 +7,10 @@ i18next.use(initReactI18next).init({
   lng: 'en', 
   debug: true,
   resources: {
-    en: {
+    'en': {
       translation,
     },
-    th: {
+    'th': {
       translationTH,
     },
   },

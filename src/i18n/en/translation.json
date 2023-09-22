@@ -1,11 +1,11 @@
 {
+  "welcome": "Welcome!",
+
   "navItems": [{
     "title": "Test 1",
-    "description": "Layout & Style",
-    "path": "/test-1"
+    "description": "Layout & Style"
   }, {
     "title": "Test 2",
-    "description": "Form & Table",
-    "path": "/test-2"
+    "description": "Form & Table"
   }]
 }

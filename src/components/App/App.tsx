@@ -5,7 +5,8 @@ import { Typography } from 'antd';
 import '../../i18n/config';
 import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
+
 
 
 const { Title } = Typography;
@@ -31,24 +32,17 @@ const App: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [navItems, setNavItems] = useState<NavProps[]>([]);
 
+  const items: NavProps[] = t('navItems', { returnObjects: true });
 
   useEffect(() => {
-    const items: NavProps[] = t('navItems', { returnObjects: true });
     setNavItems(items)
   }, []);
-
-  const changeLanguageHandler = (e: any) => {
-    const languageValue = e.target.value
-    i18n.changeLanguage(languageValue);
-  }
 
   return (
     <div className="App">
 
-      <select className="custom-select" style={{width: 200}} onChange={changeLanguageHandler}>
-        <option value="en">English</option>
-        <option value="th">ไทย</option>
-      </select>
+      <h1>{t("welcome")}</h1>
+
       <header className="App-header">
         <Row className="Nav"  justify="center">
           {navItems.map(({title, description}: NavProps, index: number) => (
@@ -60,10 +54,10 @@ const App: React.FC = () => {
               >
 
                 <Title level={5} className="title">
-                  {title}
+                  {items[index].title}
                 </Title>
                 <p>
-                  {description}
+                  {items[index].description}
                 </p>
               </Col>
             </Link>
